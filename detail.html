@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>大橘档案 - 校园猫猫地图</title>
+<script src="https://modao.cc/agent-py/static/source/js/tailwindcss.3.4.3.js"></script>
+<script src="https://modao.cc/agent-py/static/source/js/iconify-icon.min.1.0.7.js"></script>
+<style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <div class="w-[375px] h-[812px] bg-[#FFF9F0] relative overflow-hidden shadow-2xl rounded-[40px] border-[8px] border-gray-800 flex flex-col">
+        <!-- 头部大图 -->
+        <div class="relative h-72 w-full">
+            <img alt="Cat Detail" class="w-full h-full object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-04-21/a1dca749e2f340fe885d7d9c1ea272d0.jpg" />
+            <div class="absolute top-12 left-6 right-6 flex justify-between">
+                <button class="w-10 h-10 bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center text-white" onclick="history.back()">
+                    <iconify-icon icon="ph:caret-left-bold"></iconify-icon>
+                </button>
+                <button class="w-10 h-10 bg-black/20 backdrop-blur-md rounded-full flex items-center justify-center text-white">
+                    <iconify-icon icon="ph:share-network-bold"></iconify-icon>
+                </button>
+            </div>
+            <!-- 圆角遮罩 -->
+            <div class="absolute bottom-0 w-full h-10 bg-[#FFF9F0] rounded-t-[40px]"></div>
+        </div>
+        <!-- 详情内容 -->
+        <div class="flex-1 overflow-y-auto px-6 pb-20 no-scrollbar ">
+            <!-- 基本信息 -->
+            <div class="flex justify-between items-start gap-3">
+
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-3xl font-bold text-gray-800" id="catName">大橘</h1>
+                        <span id="catGenderSymbol" class="text-2xl font-bold ml-1"></span>
+
+                        <div class="flex gap-2 mt-2">
+                            <span class="text-[10px] bg-orange-50 text-orange-600 px-2 py-1 rounded-md" id="gender">♂</span>
+                            <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-md" id="catColor">橘色条纹</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-1 flex items-center gap-1 truncate">
+                        <iconify-icon class="text-orange-400 flex-shrink-0" icon="ph:fingerprint-bold"></iconify-icon>
+                        <span class="truncate">编号: CAMPUS-001</span>
+                    </p>
+                </div>
+
+                <div class="flex flex-col items-end gap-2 flex-shrink-0">
+                    <span class="bg-green-100 text-green-600 text-xs px-3 py-1 rounded-full font-bold whitespace-nowrap">已绝育</span>
+                    <span class="bg-blue-100 text-blue-600 text-xs px-3 py-1 rounded-full font-bold whitespace-nowrap">健康状况: 良好</span>
+                </div>
+            </div>
+            <!-- 属性标签 -->
+            <div class="flex flex-wrap gap-2 mt-4">
+                <span class="px-3 py-1 bg-white border border-orange-100 text-orange-600 rounded-full text-xs"># 图书馆守护者</span>
+                <span class="px-3 py-1 bg-white border border-orange-100 text-orange-600 rounded-full text-xs"># 橘猫</span>
+                <span class="px-3 py-1 bg-white border border-orange-100 text-orange-600 rounded-full text-xs"># 亲人指数 ★★★★★</span>
+            </div>
+            <!-- 性格描述 -->
+            <div class="mt-8">
+                <h2 class="font-bold text-gray-800 border-l-4 border-[#FF9F43] pl-2">猫咪自述</h2>
+                <p class="text-sm text-gray-600 leading-relaxed mt-3 bg-white p-4 rounded-3xl shadow-sm italic">
+                    "喵~ 我是这片区域的‘馆长’。虽然我胖，但我那是为了抵御冬天！我最喜欢图书馆门前的那个台阶，阳光晒得最舒服。如果你带了冻干，我们可以成为最好的朋友。"
+                </p>
+            </div>
+            <!-- 照片墙 -->
+            <div class="mt-8">
+                <h2 class="font-bold text-gray-800 border-l-4 border-[#FF9F43] pl-2 mb-4">生活写真</h2>
+                <div class="flex gap-3 overflow-x-auto no-scrollbar">
+                    <img class="w-32 h-44 rounded-2xl object-cover flex-shrink-0" src="/agent-py/static/source/images/placeholder.svg" />
+                    <img class="w-32 h-44 rounded-2xl object-cover flex-shrink-0" src="/agent-py/static/source/images/placeholder.svg" />
+                    <img class="w-32 h-44 rounded-2xl object-cover flex-shrink-0" src="/agent-py/static/source/images/placeholder.svg" />
+                </div>
+            </div>
+            <!-- 故事墙 -->
+            <div class="mt-8 pb-10">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="font-bold text-gray-800 border-l-4 border-[#FF9F43] pl-2">故事墙 (12)</h2>
+                    <button class="text-xs text-[#FF9F43] font-bold">+ 分享互动</button>
+                </div>
+                <div class="space-y-4">
+                    <!-- 评论 1 -->
+                    <div class="bg-white p-4 rounded-3xl shadow-sm">
+                        <div class="flex items-center gap-2">
+                            <img class="w-8 h-8 rounded-full" src="/agent-py/static/source/images/placeholder.svg" />
+                            <div class="flex-1">
+                                <h4 class="text-xs font-bold text-gray-800">王同学 (地信)</h4>
+                                <p class="text-[10px] text-gray-400">2026-04-20 14:20</p>
+                            </div>
+                            <div class="flex items-center gap-1 text-gray-400 text-xs">
+                                <iconify-icon icon="ph:heart-bold"></iconify-icon>
+                                24
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-2">今天在图书馆自习出来，看到大橘又在晒太阳，还允许我摸了五分钟！太治愈了。</p>
+                    </div>
+                    <!-- 评论 2 -->
+                    <div class="bg-white p-4 rounded-3xl shadow-sm border border-orange-100">
+                        <div class="flex items-center gap-2">
+                            <img class="w-8 h-8 rounded-full" src="/agent-py/static/source/images/placeholder.svg" />
+                            <div class="flex-1">
+                                <h4 class="text-xs font-bold text-gray-800">李阿姨 (后勤)</h4>
+                                <p class="text-[10px] text-gray-400">2026-04-18 09:15</p>
+                            </div>
+                            <div class="flex items-center gap-1 text-gray-400 text-xs">
+                                <iconify-icon icon="ph:heart-bold"></iconify-icon>
+                                56
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-2">大橘最近好像瘦了一点，大家投喂的时候注意要放专门的猫粮，别喂火腿肠哦。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 底部操作栏 -->
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 w-[340px] flex gap-3 z-10">
+            <button class="w-14 h-14 bg-white rounded-2xl shadow-xl flex items-center justify-center text-gray-400">
+                <iconify-icon class="text-2xl" icon="ph:heart-fill"></iconify-icon>
+            </button>
+            <a class="flex-1 bg-[#FF9F43] text-white rounded-2xl shadow-xl flex items-center justify-center gap-2 font-bold" href="checkin.html">
+                <iconify-icon class="text-xl" icon="ph:camera-fill"></iconify-icon>
+                去见TA并打卡
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 猫咪数据库
+        const catDetails = {
+            '大橘': { gender: '公', color: '橘色条纹', status: '健康', loc: '图书馆' },
+            '小黑': { gender: '母', color: '纯黑', status: '已绝育', loc: '18舍' },
+            '警长': { gender: '公', color: '黑白花色', status: '健康', loc: '叠翠山' }
+        };
+
+        function updatePage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const name = urlParams.get('name') || '大橘';
+            const data = catDetails[name];
+
+            if (data) {
+                document.getElementById('catName').innerText = name;
+                document.getElementById('catStatus').innerText = data.status;
+                document.getElementById('catLoc').innerText = data.loc;
+                document.getElementById('catColor').innerText = '毛色：' + data.color;
+
+                // 性别符号逻辑
+                const genderEl = document.getElementById('catGenderSymbol');
+                if (data.gender === '公') {
+                    genderEl.innerText = '♂';
+                    genderEl.className = 'text-2xl font-bold ml-1 text-blue-500';
+                } else {
+                    genderEl.innerText = '♀';
+                    genderEl.className = 'text-2xl font-bold ml-1 text-red-500';
+                }
+            }
+        }
+        window.onload = updatePage;
+    </script>
+</body>
+</html>

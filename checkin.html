@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>偶遇打卡 - 校园猫猫地图</title>
+<script src="https://modao.cc/agent-py/static/source/js/tailwindcss.3.4.3.js"></script>
+<script src="https://modao.cc/agent-py/static/source/js/iconify-icon.min.1.0.7.js"></script>
+<style>
+        .scanner-line {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #FF9F43, transparent);
+            animation: scan 3s infinite linear;
+        }
+        @keyframes scan {
+            0% { top: 20%; }
+            50% { top: 80%; }
+            100% { top: 20%; }
+        }
+        .shutter-btn {
+            box-shadow: 0 0 0 4px white, 0 0 0 8px rgba(255, 159, 67, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <div class="w-[375px] h-[812px] bg-black relative overflow-hidden shadow-2xl rounded-[40px] border-[8px] border-gray-800 flex flex-col">
+        <!-- 相机预览区域 -->
+        <div class="absolute inset-0 bg-gray-900">
+            <img alt="Camera View" class="w-full h-full object-cover opacity-80" src="https://modao.cc/agent-py/media/generated_images/2026-04-21/dee673a6641540cfac92d85c54825d40.jpg" />
+            <!-- 扫描动效 -->
+            <div class="absolute inset-0 hidden" id="scanner">
+                <div class="scanner-line absolute w-full z-10"></div>
+                <div class="absolute inset-0 bg-[#FF9F43]/10"></div>
+                <!-- 识别框 -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border-2 border-dashed border-white/50 rounded-3xl flex items-center justify-center">
+                    <p class="text-white text-sm font-bold bg-black/40 px-3 py-1 rounded-full backdrop-blur-md">正在识别猫咪品种与特征...</p>
+                </div>
+            </div>
+        </div>
+        <!-- 顶部返回 -->
+        <div class="absolute top-12 left-6 z-20">
+            <a class="w-10 h-10 bg-black/30 backdrop-blur-md rounded-full flex items-center justify-center text-white" href="index.html">
+                <iconify-icon icon="ph:caret-left-bold"></iconify-icon>
+            </a>
+        </div>
+        <!-- AI 识别结果弹窗 (默认隐藏) -->
+        <div class="absolute bottom-40 left-1/2 -translate-x-1/2 w-[340px] bg-white rounded-3xl p-5 shadow-2xl transform scale-0 transition-all duration-300 z-30" id="aiResult">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-[#FF9F43]">
+                    <iconify-icon class="text-2xl" icon="ph:sparkle-fill"></iconify-icon>
+                </div>
+                <div>
+                    <h3 class="font-bold text-gray-800">AI 识别成功!</h3>
+                    <p class="text-[10px] text-gray-500">置信度: 98.2%</p>
+                </div>
+            </div>
+            <div class="bg-gray-50 rounded-2xl p-3 flex gap-4 border border-gray-100">
+                <img class="w-16 h-16 rounded-xl object-cover" src="/agent-py/static/source/images/placeholder.svg" />
+                <div>
+                    <h4 class="font-bold text-gray-800">大橘 (ID: 001)</h4>
+                    <p class="text-xs text-gray-500">特征匹配：金渐层、亲人</p>
+                    <div class="mt-1 flex items-center gap-1 text-[10px] text-orange-500 font-bold">
+                        <iconify-icon icon="ph:map-pin-fill"></iconify-icon>
+                        当前位置：图书馆正门
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 flex gap-3">
+                <button class="flex-1 py-3 bg-gray-100 text-gray-500 rounded-2xl font-bold text-sm text-center" onclick="location.reload()">重新识别</button>
+                <button class="flex-1 py-3 bg-[#FF9F43] text-white rounded-2xl font-bold text-sm text-center" onclick="alert('打卡成功！获得 5 积分')">确认打卡</button>
+            </div>
+        </div>
+        <!-- 底部控制台 -->
+        <div class="absolute bottom-0 w-full h-44 bg-gradient-to-t from-black/80 to-transparent flex flex-col items-center justify-end pb-10 z-20">
+            <!-- 模式切换 -->
+            <div class="flex gap-8 mb-6">
+                <button class="text-white text-sm font-bold border-b-2 border-[#FF9F43] pb-1">偶遇打卡</button>
+                <button class="text-white/60 text-sm">投喂打卡</button>
+            </div>
+            <div class="flex items-center gap-12">
+                <button class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white">
+                    <iconify-icon class="text-2xl" icon="ph:image-square-fill"></iconify-icon>
+                </button>
+                <!-- 快门 -->
+                <button class="shutter-btn w-20 h-20 bg-white rounded-full flex items-center justify-center" onclick="startScan()">
+                    <div class="w-16 h-16 bg-white border-4 border-gray-100 rounded-full"></div>
+                </button>
+                <button class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white">
+                    <iconify-icon class="text-2xl" icon="ph:arrows-clockwise-bold"></iconify-icon>
+                </button>
+            </div>
+        </div>
+        <!-- 装饰性 UI -->
+        <div class="absolute top-12 right-6 flex flex-col gap-4 z-20">
+            <iconify-icon class="text-white text-2xl opacity-60" icon="ph:lightning-fill"></iconify-icon>
+            <iconify-icon class="text-[#FF9F43] text-2xl" icon="ph:magic-wand-fill"></iconify-icon>
+        </div>
+        <!-- 弹出卡片 -->
+        <div id="safetyPopup" class="absolute inset-0 z-[100] flex items-center justify-center px-6 hidden">
+            <div class="absolute inset-0 bg-black/70 backdrop-blur-md"></div>
+
+            <div class="bg-white w-full rounded-[32px] overflow-hidden relative z-10 shadow-2xl animate-in fade-in zoom-in duration-300">
+                <div class="h-24 bg-[#FF9F43] flex items-center justify-center">
+                    <iconify-icon class="text-white text-5xl" icon="ph:warning-circle-fill"></iconify-icon>
+                </div>
+
+                <button onclick="closePopup()" class="absolute top-4 right-4 w-8 h-8 bg-black/10 rounded-full flex items-center justify-center text-white active:scale-90 transition-transform">
+                    <iconify-icon icon="ph:x-bold"></iconify-icon>
+                </button>
+
+                <div class="p-6">
+                    <h3 class="text-lg font-bold text-gray-800 text-center mb-4">科学养猫温馨提示</h3>
+
+                    <div class="space-y-4">
+                        <div class="bg-red-50 p-3 rounded-2xl flex items-start gap-3 border border-red-100">
+                            <iconify-icon class="text-red-500 text-xl mt-0.5" icon="ph:prohibit-inset-fill"></iconify-icon>
+                            <div>
+                                <p class="text-xs font-bold text-red-600">投喂禁忌</p>
+                                <p class="text-[10px] text-red-500 mt-1 leading-relaxed">严禁投喂巧克力、洋葱、葡萄及高盐火腿肠，这些会导致猫咪中毒。</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 p-3 rounded-2xl flex items-start gap-3 border border-blue-100">
+                            <iconify-icon class="text-blue-500 text-xl mt-0.5" icon="ph:hand-palm-fill"></iconify-icon>
+                            <div>
+                                <p class="text-xs font-bold text-blue-600">安全互动</p>
+                                <p class="text-[10px] text-blue-500 mt-1 leading-relaxed">请保持距离观察，勿在猫咪进食或睡觉时惊扰，谨防被抓伤。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="closePopup()" class="w-full bg-[#FF9F43] text-white py-3 rounded-xl mt-6 font-bold shadow-lg shadow-orange-200 active:scale-95 transition-transform">
+                        我知道了
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 页面加载 800ms 后自动弹出
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const popup = document.getElementById('safetyPopup');
+                if (popup) {
+                    popup.classList.remove('hidden');
+                    popup.style.display = 'flex'; // 强制触发 Flex 居中
+                }
+            }, 800);
+        });
+
+        // 关闭弹窗函数
+        function closePopup() {
+            const popup = document.getElementById('safetyPopup');
+            if (popup) {
+                popup.style.opacity = '0';
+                popup.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => {
+                    popup.classList.add('hidden');
+                    popup.style.display = 'none';
+                }, 300);
+            }
+        }
+
+        // AI 扫描逻辑
+        function startScan() {
+            const scanner = document.getElementById('scanner');
+            const result = document.getElementById('aiResult');
+            scanner.classList.remove('hidden');
+            setTimeout(() => {
+                scanner.classList.add('hidden');
+                result.classList.remove('scale-0');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>猫咪图鉴 - 校园猫猫地图</title>
+<script src="https://modao.cc/agent-py/static/source/js/tailwindcss.3.4.3.js"></script>
+<script src="https://modao.cc/agent-py/static/source/js/iconify-icon.min.1.0.7.js"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+<div class="w-[375px] h-[812px] bg-[#FFF9F0] relative overflow-hidden shadow-2xl rounded-[40px] border-[8px] border-gray-800 flex flex-col">
+<!-- 头部 -->
+<div class="pt-12 px-6 pb-4 bg-white">
+<h1 class="text-2xl font-bold text-gray-800">校园猫咪图鉴</h1>
+<p class="text-sm text-gray-500 mt-1">目前已收录 42 只校园萌友</p>
+<!-- 搜索框 -->
+<div class="mt-4 relative">
+<iconify-icon class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" icon="ph:magnifying-glass"></iconify-icon>
+<input class="w-full bg-gray-100 rounded-2xl py-3 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9F43]/50 transition-all" placeholder="搜索昵称或特征..." type="text"/>
+</div>
+</div>
+<!-- 筛选标签 -->
+<div class="flex gap-3 px-6 py-4 overflow-x-auto no-scrollbar whitespace-nowrap bg-white border-b border-gray-50">
+<span class="px-4 py-1.5 bg-[#FF9F43] text-white rounded-full text-xs font-bold shadow-sm">全部</span>
+<span class="px-4 py-1.5 bg-white border border-gray-200 text-gray-600 rounded-full text-xs">橘猫</span>
+<span class="px-4 py-1.5 bg-white border border-gray-200 text-gray-600 rounded-full text-xs">三花</span>
+<span class="px-4 py-1.5 bg-white border border-gray-200 text-gray-600 rounded-full text-xs">奶牛猫</span>
+<span class="px-4 py-1.5 bg-white border border-gray-200 text-gray-600 rounded-full text-xs">狸花</span>
+</div>
+<!-- 猫咪列表 -->
+<div class="flex-1 overflow-y-auto px-4 py-4 space-y-4 pb-24">
+<!-- 猫咪卡片 1 -->
+<a class="block bg-white rounded-[24px] p-3 shadow-sm hover:shadow-md transition-shadow" href="detail.html">
+<div class="flex gap-4">
+<div class="relative">
+<img alt="Cat" class="w-24 h-24 rounded-2xl object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-04-21/5edc1de453b74b67afb57af4a481e4da.jpg"/>
+<div class="absolute -top-2 -left-2 bg-orange-400 text-white text-[10px] font-bold px-2 py-0.5 rounded-lg shadow-sm">ID: 001</div>
+</div>
+<div class="flex-1 flex flex-col justify-between py-1">
+<div>
+<div class="flex justify-between items-center">
+<h3 class="font-bold text-gray-800 text-lg flex items-center gap-1">
+                                    大橘 
+                                    <iconify-icon class="text-blue-400 text-sm" icon="ph:gender-male-bold"></iconify-icon>
+</h3>
+<span class="bg-green-100 text-green-600 text-[10px] px-2 py-1 rounded-full font-bold">已绝育</span>
+</div>
+<p class="text-[11px] text-gray-500 mt-1 line-clamp-1">常出没于图书馆后门，性格温顺，喜欢被摸头。</p>
+</div>
+<div class="flex gap-2">
+<span class="text-[10px] bg-orange-50 text-orange-600 px-2 py-1 rounded-md">#橘猫</span>
+<span class="text-[10px] bg-purple-50 text-purple-600 px-2 py-1 rounded-md">#亲人</span>
+<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-md">#健康</span>
+</div>
+</div>
+</div>
+</a>
+<!-- 猫咪卡片 2 -->
+<div class="bg-white rounded-[24px] p-3 shadow-sm">
+<div class="flex gap-4">
+<div class="relative">
+<img alt="Cat" class="w-24 h-24 rounded-2xl object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-04-21/5edc1de453b74b67afb57af4a481e4da.jpg"/>
+<div class="absolute -top-2 -left-2 bg-orange-400 text-white text-[10px] font-bold px-2 py-0.5 rounded-lg shadow-sm">ID: 002</div>
+</div>
+<div class="flex-1 flex flex-col justify-between py-1">
+<div>
+<div class="flex justify-between items-center">
+<h3 class="font-bold text-gray-800 text-lg flex items-center gap-1">
+                                    警长 
+                                    <iconify-icon class="text-blue-400 text-sm" icon="ph:gender-male-bold"></iconify-icon>
+</h3>
+<span class="bg-gray-100 text-gray-400 text-[10px] px-2 py-1 rounded-full font-bold">未绝育</span>
+</div>
+<p class="text-[11px] text-gray-500 mt-1 line-clamp-1">叠翠山守护者，眼神犀利，但给零食就让摸。</p>
+</div>
+<div class="flex gap-2">
+<span class="text-[10px] bg-gray-50 text-gray-600 px-2 py-1 rounded-md">#奶牛猫</span>
+<span class="text-[10px] bg-red-50 text-red-600 px-2 py-1 rounded-md">#高冷</span>
+<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-md">#已驱虫</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 猫咪卡片 3 -->
+<div class="bg-white rounded-[24px] p-3 shadow-sm">
+<div class="flex gap-4">
+<div class="relative">
+<img alt="Cat" class="w-24 h-24 rounded-2xl object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-04-21/5edc1de453b74b67afb57af4a481e4da.jpg"/>
+<div class="absolute -top-2 -left-2 bg-orange-400 text-white text-[10px] font-bold px-2 py-0.5 rounded-lg shadow-sm">ID: 003</div>
+</div>
+<div class="flex-1 flex flex-col justify-between py-1">
+<div>
+<div class="flex justify-between items-center">
+<h3 class="font-bold text-gray-800 text-lg flex items-center gap-1">
+                                    三花儿 
+                                    <iconify-icon class="text-pink-400 text-sm" icon="ph:gender-female-bold"></iconify-icon>
+</h3>
+<span class="bg-green-100 text-green-600 text-[10px] px-2 py-1 rounded-full font-bold">已绝育</span>
+</div>
+<p class="text-[11px] text-gray-500 mt-1 line-clamp-1">南苑草坪小公主，毛色亮丽，喜欢抓蝴蝶。</p>
+</div>
+<div class="flex gap-2">
+<span class="text-[10px] bg-orange-50 text-orange-600 px-2 py-1 rounded-md">#三花</span>
+<span class="text-[10px] bg-yellow-50 text-yellow-600 px-2 py-1 rounded-md">#活泼</span>
+<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-md">#健康</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 猫咪卡片 4 -->
+<div class="bg-white rounded-[24px] p-3 shadow-sm">
+<div class="flex gap-4">
+<div class="relative">
+<img alt="Cat" class="w-24 h-24 rounded-2xl object-cover" src="https://modao.cc/agent-py/media/generated_images/2026-04-21/5edc1de453b74b67afb57af4a481e4da.jpg"/>
+<div class="absolute -top-2 -left-2 bg-orange-400 text-white text-[10px] font-bold px-2 py-0.5 rounded-lg shadow-sm">ID: 005</div>
+</div>
+<div class="flex-1 flex flex-col justify-between py-1">
+<div>
+<div class="flex justify-between items-center">
+<h3 class="font-bold text-gray-800 text-lg flex items-center gap-1">
+                                    芝麻球 
+                                    <iconify-icon class="text-pink-400 text-sm" icon="ph:gender-female-bold"></iconify-icon>
+</h3>
+<span class="bg-green-100 text-green-600 text-[10px] px-2 py-1 rounded-full font-bold">已绝育</span>
+</div>
+<p class="text-[11px] text-gray-500 mt-1 line-clamp-1">全黑短毛，性格胆小，多在深夜出没。</p>
+</div>
+<div class="flex gap-2">
+<span class="text-[10px] bg-gray-50 text-gray-600 px-2 py-1 rounded-md">#黑猫</span>
+<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-md">#文静</span>
+<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-md">#健康</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 加载更多 -->
+<p class="text-center text-xs text-gray-400 py-4">到底啦，没有更多主子了~</p>
+</div>
+<!-- 底部 TabBar -->
+<div class="absolute bottom-0 w-full h-20 bg-white border-t border-gray-100 flex items-center justify-around px-2 pb-2 z-30">
+<a class="flex flex-col items-center gap-1 text-gray-400" href="index.html">
+<iconify-icon class="text-2xl" icon="ph:map-trifold-fill"></iconify-icon>
+<span class="text-[10px]">首页</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#FF9F43]" href="atlas.html">
+<iconify-icon class="text-2xl" icon="ph:cat-fill"></iconify-icon>
+<span class="text-[10px] font-bold">图鉴</span>
+</a>
+<div class="relative -top-5">
+<a class="w-14 h-14 bg-[#FF9F43] rounded-full flex items-center justify-center text-white shadow-lg border-4 border-white" href="checkin.html">
+<iconify-icon class="text-2xl" icon="ph:camera-fill"></iconify-icon>
+</a>
+</div>
+<a class="flex flex-col items-center gap-1 text-gray-400" href="ranking.html">
+<iconify-icon class="text-2xl" icon="ph:crown-fill"></iconify-icon>
+<span class="text-[10px]">排行榜</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-400" href="profile.html">
+<iconify-icon class="text-2xl" icon="ph:user-fill"></iconify-icon>
+<span class="text-[10px]">我的</span>
+</a>
+</div>
+</div>
+</body>
+</html>
