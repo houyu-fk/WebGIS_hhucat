@@ -1,0 +1,25 @@
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hhucat   # 数据库名根据你实际创建的修改
+    username: postgres                              # 你的 PostgreSQL 用户名
+    password: 1360qtip                            # 改成你自己的密码
+    driver-class-name: org.postgresql.Driver
+
+
+  web:
+    resources:
+      static-locations: classpath:/static/,file:D:/university_documents/2025-2026学习资料/WebGIS/hhucat/backend/src/main/resources/cat_image
+  mvc:
+    static-path-pattern: /cat_images/**
+    
+  jpa:
+    hibernate:
+      ddl-auto: update          # 生产环境建议改成 validate 或 none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8080
