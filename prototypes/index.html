@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>校园猫猫地图 - 首页</title>
+    <script src="https://modao.cc/agent-py/static/source/js/tailwindcss.3.4.3.js"></script>
+    <script src="https://modao.cc/agent-py/static/source/js/iconify-icon.min.1.0.7.js"></script>
+
+    <script type="text/javascript">
+        window._AMapSecurityConfig = { securityJsCode: "7feaccc2d2562cbf81c2a5ec4c3eaf0c" };
+    </script>
+    <script src="https://webapi.amap.com/maps?v=2.0&key=993ed41f7983bca104be917505186e79"></script>
+
+    
+    <style>
+    @keyframes pulse-orange {
+        0% { transform: scale(1); opacity: 0.9; }
+        50% { transform: scale(1.15); opacity: 1; }
+        100% { transform: scale(1); opacity: 0.9; }
+    }
+
+    .cat-marker-container {
+        position: relative;
+    }
+
+    .cat-marker-icon {
+        width: 42px !important;
+        height: 42px !important;
+        background-color: #FF9F43;
+        border-radius: 50% !important;     /* 强制圆形 */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(255, 159, 67, 0.4);
+        border: 3px solid white;
+        animation: pulse-orange 2s infinite ease-in-out;
+    }
+
+    .cat-marker-icon iconify-icon {
+        font-size: 24px;
+        color: white;
+    }
+
+    .amap-logo, .amap-copyright { display: none !important; }
+</style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+
+<div class="w-[375px] h-[812px] bg-[#FFF9F0] relative overflow-hidden shadow-2xl rounded-[40px] border-[8px] border-gray-800">
+
+    <!-- 顶部栏 -->
+    <div class="absolute top-0 w-full h-20 bg-white/80 backdrop-blur-md z-10 flex items-end pb-2 px-6 justify-between">
+        <div class="flex items-center gap-2">
+            <iconify-icon class="text-[#FF9F43] text-2xl" icon="mdi:cat"></iconify-icon>
+            <span class="font-bold text-gray-800 text-lg">河海校园猫咪地图</span>
+        </div>
+        
+        <!-- 搜索按钮 -->
+        <button onclick="showSearchModal()" class="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-[#FF9F43]">
+            <iconify-icon class="text-2xl" icon="ph:magnifying-glass-bold"></iconify-icon>
+        </button>
+    </div>
+
+    <div id="map-container" class="w-full h-full bg-[#e5e7eb]"></div>
+
+    <!-- 右侧浮动按钮 -->
+    <div class="absolute right-4 bottom-32 flex flex-col gap-3 z-10">
+        <button id="recenter-btn" class="w-12 h-12 bg-white rounded-full shadow-xl flex items-center justify-center text-[#FF9F43]">
+            <iconify-icon class="text-2xl" icon="ph:crosshair-bold"></iconify-icon>
+        </button>
+    </div>
+
+    <!-- 猫咪信息卡片 -->
+    <div class="absolute bottom-24 left-1/2 -translate-x-1/2 w-[340px] bg-white rounded-3xl shadow-2xl p-4 transition-all transform translate-y-[200%] duration-300 z-20" id="catCard"></div>
+
+    <!-- 底部导航栏（五栏布局） -->
+    <div class="absolute bottom-0 w-full h-20 bg-white border-t border-gray-100 flex items-center justify-around px-2 z-30">
+        <!-- 地图 -->
+        <a href="index.html" class="flex flex-col items-center gap-1 text-[#FF9F43]">
+            <iconify-icon class="text-3xl" icon="ph:map-trifold-fill"></iconify-icon>
+            <span class="text-[10px] font-bold">地图</span>
+        </a>
+        
+        <!-- 图鉴 -->
+        <a href="atlas.html" class="flex flex-col items-center gap-1 text-gray-400">
+            <iconify-icon class="text-3xl" icon="ph:cat-fill"></iconify-icon>
+            <span class="text-[10px]">图鉴</span>
+        </a>
+        
+        <!-- 打卡（中间突出） -->
+        <a href="checkin.html" class="flex flex-col items-center gap-1 -mt-8">
+            <div class="w-16 h-16 bg-[#FF9F43] rounded-full flex items-center justify-center text-white shadow-2xl border-4 border-white">
+                <iconify-icon class="text-4xl" icon="ph:camera-fill"></iconify-icon>
+            </div>
+            <span class="text-[10px] font-bold text-[#FF9F43] mt-1">打卡</span>
+        </a>
+        
+        <!-- 故事墙 -->
+        <a href="stories.html" class="flex flex-col items-center gap-1 text-gray-400">
+            <iconify-icon class="text-3xl" icon="ph:chat-teardrop-text-fill"></iconify-icon>
+            <span class="text-[10px]">故事</span>
+        </a>
+        
+        <!-- 我的 -->
+        <a href="profile.html" class="flex flex-col items-center gap-1 text-gray-400">
+            <iconify-icon class="text-3xl" icon="ph:user-circle-fill"></iconify-icon>
+            <span class="text-[10px]">我的</span>
+        </a>
+    </div>
+</div>
+
+<script>
+// 初始化地图
+const map = new AMap.Map('map-container', {
+    zoom: 16,
+    center: [118.786000, 31.915500]
+});
+
+let allCats = [];
+
+// 加载猫咪数据
+fetch('http://localhost:8080/api/cats')
+  .then(res => res.json())
+  .then(cats => {
+    allCats = cats;
+    cats.forEach(cat => {
+    const markerContent = `
+        <div class="cat-marker-container">
+            <div class="cat-marker-icon">
+                <iconify-icon icon="mdi:cat"></iconify-icon>
+            </div>
+        </div>`;
+
+    const marker = new AMap.Marker({
+        position: [cat.longitude, cat.latitude],
+        content: markerContent,
+        offset: new AMap.Pixel(-21, -21)   // 居中偏移（宽度42px的一半）
+    });
+
+    marker.on('click', () => showCatCard(cat));
+    map.add(marker);
+    });
+  });
+
+function showCatCard(cat) {
+    const card = document.getElementById('catCard');
+    card.innerHTML = `
+        <div class="flex gap-4">
+            <img alt="${cat.name}" class="w-20 h-20 rounded-2xl object-cover" 
+                 src="https://modao.cc/agent-py/media/generated_images/2026-04-21/5c79913aab7c4bc88514efd27611f3c2.jpg" />
+            <div class="flex-1">
+                <div class="flex justify-between items-start">
+                    <h3 class="text-xl font-bold text-gray-800">${cat.name}</h3>
+                    <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">${cat.healthStatus || '良好'}</span>
+                </div>
+                <p class="text-sm text-gray-500 mt-1">${cat.locationDesc || '校园内'}</p>
+                <div class="mt-4 flex gap-2">
+                    <a href="detail.html?id=${cat.id}" class="flex-1 bg-orange-50 text-[#FF9F43] py-2.5 rounded-2xl text-center text-sm font-bold">查看档案</a>
+                    <a href="checkin.html?catId=${cat.id}" class="flex-1 bg-[#FF9F43] text-white py-2.5 rounded-2xl text-center text-sm font-bold">去打卡</a>
+                </div>
+            </div>
+        </div>
+    `;
+    card.style.transform = 'translateY(0) translateX(-50%)';
+}
+
+function showSearchModal() {
+    const keyword = prompt("🔍 搜索猫咪名称：");
+    if (!keyword?.trim()) return;
+    const result = allCats.find(c => c.name.toLowerCase().includes(keyword.toLowerCase()));
+    if (result) {
+        showCatCard(result);
+        map.setCenter([result.longitude, result.latitude]);
+    } else {
+        alert("没有找到匹配的猫咪~");
+    }
+}
+
+document.getElementById('recenter-btn').addEventListener('click', () => {
+    map.setZoomAndCenter(16, [118.786000, 31.915500]);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>猫咪档案 - 校园猫猫地图</title>
+<script src="https://modao.cc/agent-py/static/source/js/tailwindcss.3.4.3.js"></script>
+<script src="https://modao.cc/agent-py/static/source/js/iconify-icon.min.1.0.7.js"></script>
+<style>
+    .cat-name {
+        font-size: 2.4rem;
+        font-weight: 900;
+        background: linear-gradient(90deg, #FF9F43, #FF6B00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .tag { padding: 4px 12px; border-radius: 9999px; font-size: 13px; font-weight: 600; }
+</style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+<div class="w-[375px] h-[812px] bg-[#FFF9F0] relative overflow-hidden shadow-2xl rounded-[40px] border-[8px] border-gray-800 flex flex-col">
+
+    <!-- 大图头部 -->
+    <div class="relative h-72 w-full">
+        <img id="catImage" class="w-full h-full object-cover" 
+             src="https://modao.cc/agent-py/media/generated_images/2026-04-21/a1dca749e2f340fe885d7d9c1ea272d0.jpg" alt="猫咪"/>
+        <div class="absolute top-12 left-6 right-6 flex justify-between z-10">
+            <button onclick="history.back()" class="w-10 h-10 bg-black/30 backdrop-blur-md rounded-full flex items-center justify-center text-white">
+                <iconify-icon icon="ph:caret-left-bold"></iconify-icon>
+            </button>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#FFF9F0] to-transparent"></div>
+    </div>
+
+    <div class="flex-1 overflow-y-auto px-6 pb-24 -mt-8 relative z-10">
+        
+        <div class="flex items-end justify-between">
+            <div class="flex items-end gap-3">
+                <h1 id="catName" class="cat-name">加载中...</h1>
+                <span id="genderIcon" class="text-4xl mb-1"></span>
+            </div>
+            <span id="catIdBadge" class="text-xs bg-gray-200 text-gray-700 px-3 py-1 rounded-full font-mono">ID: --</span>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mt-4" id="infoTags"></div>
+
+        <div class="grid grid-cols-2 gap-4 mt-6">
+            <div class="bg-white rounded-3xl p-5 shadow-sm">
+                <p class="text-xs text-gray-500">健康状况</p>
+                <p id="healthStatus" class="text-xl font-bold text-green-600 mt-1"></p>
+            </div>
+            <div class="bg-white rounded-3xl p-5 shadow-sm">
+                <p class="text-xs text-gray-500">绝育情况</p>
+                <p id="neuteredStatus" class="text-xl font-bold mt-1"></p>
+            </div>
+        </div>
+
+        <div class="mt-7">
+            <h2 class="font-bold text-gray-800 border-l-4 border-[#FF9F43] pl-3 mb-3">性格特征</h2>
+            <div id="characterDesc" class="bg-white p-6 rounded-3xl leading-relaxed text-gray-700 shadow-sm"></div>
+        </div>
+
+        <!-- 故事墙 - 真实数据库数据 -->
+        <div class="mt-8">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-bold text-gray-800">故事墙 <span id="storyCount" class="text-sm font-normal text-gray-500">(0)</span></h2>
+                <button onclick="alert('写故事功能开发中...')" class="text-[#FF9F43] text-sm font-bold">+ 写故事</button>
+            </div>
+            <div id="storyWall" class="space-y-4">
+                <!-- 动态加载故事 -->
+            </div>
+        </div>
+    </div>
+    <div class="absolute bottom-0 w-full h-20 bg-white border-t border-gray-100 flex items-center justify-around px-2 z-30">
+    <a href="index.html" class="flex flex-col items-center gap-1 text-gray-400">
+        <iconify-icon class="text-3xl" icon="ph:map-trifold-fill"></iconify-icon>
+        <span class="text-[10px]">地图</span>
+    </a>
+    <a href="atlas.html" class="flex flex-col items-center gap-1 text-[#FF9F43]">
+        <iconify-icon class="text-3xl" icon="ph:cat-fill"></iconify-icon>
+        <span class="text-[10px] font-bold">图鉴</span>
+    </a>
+    <a href="checkin.html" class="flex flex-col items-center gap-1 -mt-8">
+        <div class="w-16 h-16 bg-[#FF9F43] rounded-full flex items-center justify-center text-white shadow-2xl border-4 border-white">
+            <iconify-icon class="text-4xl" icon="ph:camera-fill"></iconify-icon>
+        </div>
+        <span class="text-[10px] font-bold text-[#FF9F43] mt-1">打卡</span>
+    </a>
+    <a href="stories.html" class="flex flex-col items-center gap-1 text-gray-400">
+        <iconify-icon class="text-3xl" icon="ph:chat-teardrop-text-fill"></iconify-icon>
+        <span class="text-[10px]">故事</span>
+    </a>
+    <a href="profile.html" class="flex flex-col items-center gap-1 text-gray-400">
+        <iconify-icon class="text-3xl" icon="ph:user-circle-fill"></iconify-icon>
+        <span class="text-[10px]">我的</span>
+    </a>
+</div>
+    
+</div>
+
+<script>
+const catId = new URLSearchParams(window.location.search).get('id') || 1;
+
+// 加载猫咪信息
+fetch(`http://localhost:8080/api/cats/${catId}`)
+    .then(res => res.json())
+    .then(cat => {
+        document.getElementById('catName').textContent = cat.name;
+        document.getElementById('catIdBadge').textContent = `ID: ${cat.id}`;
+
+
+        const genderEl = document.getElementById('genderIcon');
+        genderEl.textContent = cat.gender === '公' ? '♂' : '♀';
+        genderEl.className = cat.gender === '公' ? 'text-blue-500' : 'text-pink-500';
+
+        document.getElementById('infoTags').innerHTML = `
+            <span class="tag bg-orange-100 text-orange-600">#${cat.breed || '未知品种'}</span>
+            <span class="tag bg-blue-100 text-blue-600">${cat.age || '成年'}</span>
+        `;
+
+        document.getElementById('healthStatus').textContent = cat.healthStatus || '良好';
+        document.getElementById('neuteredStatus').innerHTML = cat.neutered || '未知';
+        document.getElementById('characterDesc').textContent = cat.characterDesc || '暂无性格描述~';
+        
+        document.getElementById('checkinBtn').href = `checkin.html?catId=${cat.id}`;
+    });
+
+// 加载故事墙（数据库真实数据）
+fetch(`http://localhost:8080/api/stories/cat/${catId}`)
+    .then(res => res.json())
+    .then(stories => {
+        document.getElementById('storyCount').textContent = `(${stories.length})`;
+        const container = document.getElementById('storyWall');
+        container.innerHTML = '';
+
+        if (stories.length === 0) {
+            container.innerHTML = `<p class="text-gray-400 text-center py-12">还没有故事，快来写第一条吧～</p>`;
+            return;
+        }
+
+        stories.forEach(story => {
+            const div = document.createElement('div');
+            div.className = "bg-white rounded-3xl p-5 shadow-sm";
+            div.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <img class="w-9 h-9 rounded-full" src="https://modao.cc/agent-py/static/source/images/placeholder.svg"/>
+                    <div class="flex-1">
+                        <p class="font-bold text-sm">${story.authorName}</p>
+                        <p class="text-[10px] text-gray-400">${story.createdAt ? story.createdAt.substring(0, 10) : ''}</p>
+                    </div>
+                </div>
+                <p class="mt-3 text-gray-700 leading-relaxed">${story.content}</p>
+                <div class="mt-4 flex items-center gap-1 text-orange-500">
+                    <iconify-icon icon="ph:heart-fill"></iconify-icon>
+                    <span>${story.likes || 0}</span>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    })
+    .catch(err => {
+        console.error(err);
+        document.getElementById('storyWall').innerHTML = `<p class="text-red-400 text-center py-8">故事加载失败</p>`;
+    });
+</script>
+</body>
+</html>

@@ -1,39 +1,65 @@
-# webgis_hhucat
+# 河海校园猫咪地图 (webgis_hhucat)
 
-#### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+## 项目简介
+面向河海大学师生的校园流浪动物管理小程序，支持地图标记猫咪位置、创建猫咪档案、偶遇打卡互动、发布救助/领养公告以及志愿者协同管理。
 
-#### 软件架构
-软件架构说明
+## 技术栈
+| 层级 | 技术 | 版本 |
+|------|------|------|
+| 前端 | Vue 3 + Vite | 3.x |
+| 样式 | Tailwind CSS | 3.x |
+| 地图 | 高德地图 JS API | 2.0 |
+| 后端 | Spring Boot | 3.2.5 |
+| 构建 | Maven | 3.9+ |
+| 数据库 | PostgreSQL | 16+ |
+| ORM | Spring Data JPA (Hibernate) | — |
+| 工具 | Lombok | — |
 
+## 启动步骤
 
-#### 安装教程
+### 1. 数据库配置
+- 安装并启动 PostgreSQL 服务  
+- 创建数据库（命令行示例）：
+  ```bash
+  psql -U postgres -c "CREATE DATABASE hhucat;"
+  导入表结构（在项目根目录执行）：
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+bash
+psql -U postgres -d hhucat -f sql/init.sql
+修改后端配置文件 backend/src/main/resources/application.yml 中的数据库用户名和密码：
 
-#### 使用说明
+yaml
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hhucat
+    username: postgres       
+    password: 1360qtip        
+### 2. 后端运行
+bash
+cd backend
+mvn clean spring-boot:run
+后端默认运行在 http://localhost:8080。
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+### 3. 前端运行
+bash
+cd frontend
+npm install
+npm run dev
+前端开发服务器默认运行在 http://localhost:5173，已配置代理转发 /api 请求到后端。
 
-#### 参与贡献
+### 接口入口
+基础地址：http://localhost:8080/api
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+### 接口文档：见 docs/API.md
 
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+### 项目结构
+text
+hhucat/
+├── backend/          # Spring Boot 后端项目
+├── frontend/         # Vue 3 前端项目
+├── sql/              # 数据库初始化脚本
+│   └── init.sql
+├── docs/             # 需求文档、API 文档
+│   └── API.md
+├── README.md
+└── .gitignore

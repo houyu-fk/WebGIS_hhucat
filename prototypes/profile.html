@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>个人档案 - 校园猫猫地图</title>
+    <script src="https://modao.cc/agent-py/static/source/js/tailwindcss.3.4.3.js"></script>
+    <script src="https://modao.cc/agent-py/static/source/js/iconify-icon.min.1.0.7.js"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+<div class="w-[375px] h-[812px] bg-[#FFF9F0] relative overflow-hidden shadow-2xl rounded-[40px] border-[8px] border-gray-800 flex flex-col">
+
+    <!-- 背景装饰 -->
+    <div class="absolute top-0 w-full h-64 bg-gradient-to-b from-[#FF9F43] to-orange-100/30"></div>
+
+    <!-- 个人信息头部 -->
+    <div class="pt-16 px-6 relative z-10">
+        <div class="flex items-center gap-5">
+            <div class="relative">
+                <!-- 个人信息头像 -->
+                <img class="w-24 h-24 rounded-full border-4 border-white shadow-lg object-cover" 
+                    src="/backend/src/main/resources/static/4cd6a7b9f7b9d307a7ca075a493d4494f112fda25f50-aO50Yg_fw658.webp" alt="用户头像"/>
+                <div class="absolute -bottom-1 -right-1 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow">
+                    <iconify-icon class="text-[#FF9F43]" icon="ph:pencil-simple-fill"></iconify-icon>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold text-gray-800">爱猫志愿者</h2>
+                <p class="text-sm text-gray-600">ID: 2026421008</p>
+                <span class="inline-block mt-2 px-4 py-1 bg-orange-100 text-orange-600 text-xs font-bold rounded-full">初级护猫使者</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 统计数据 -->
+    <div class="px-6 mt-8 relative z-10">
+        <div class="bg-white rounded-3xl shadow p-6 grid grid-cols-3 gap-4 text-center">
+            <div>
+                <p class="text-3xl font-black text-[#FF9F43]">18</p>
+                <p class="text-xs text-gray-500 mt-1">遇见猫咪</p>
+            </div>
+            <div>
+                <p class="text-3xl font-black text-[#FF9F43]">67</p>
+                <p class="text-xs text-gray-500 mt-1">打卡次数</p>
+            </div>
+            <div>
+                <p class="text-3xl font-black text-[#FF9F43]">2480</p>
+                <p class="text-xs text-gray-500 mt-1">贡献积分</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 我的成就 -->
+    <div class="px-6 mt-8">
+        <h3 class="font-bold text-gray-800 px-1 mb-4 flex items-center gap-2">
+            <iconify-icon icon="ph:medal-fill" class="text-[#FF9F43]"></iconify-icon>
+            我的成就
+        </h3>
+        <div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+            <div class="flex flex-col items-center flex-shrink-0">
+                <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-4xl shadow">🥇</div>
+                <span class="text-xs mt-2 text-gray-600">全勤使者</span>
+            </div>
+            <div class="flex flex-col items-center flex-shrink-0">
+                <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-4xl shadow">📸</div>
+                <span class="text-xs mt-2 text-gray-600">摄影达人</span>
+            </div>
+            <div class="flex flex-col items-center flex-shrink-0 opacity-40">
+                <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-4xl shadow">🍖</div>
+                <span class="text-xs mt-2 text-gray-400">金牌饲养员</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 功能列表 -->
+    <div class="flex-1 overflow-y-auto px-6 mt-6 space-y-3 pb-24">
+        <a href="#" class="block bg-white rounded-3xl p-5 flex items-center justify-between shadow-sm active:bg-gray-50">
+            <div class="flex items-center gap-4">
+                <div class="w-11 h-11 bg-orange-50 rounded-2xl flex items-center justify-center text-2xl">❤️</div>
+                <div>
+                    <p class="font-bold text-gray-800">我的收藏</p>
+                    <p class="text-xs text-gray-500">8 只猫咪</p>
+                </div>
+            </div>
+            <iconify-icon class="text-gray-300 text-2xl" icon="ph:caret-right-bold"></iconify-icon>
+        </a>
+
+        <a href="#" class="block bg-white rounded-3xl p-5 flex items-center justify-between shadow-sm active:bg-gray-50">
+            <div class="flex items-center gap-4">
+                <div class="w-11 h-11 bg-blue-50 rounded-2xl flex items-center justify-center text-2xl">📖</div>
+                <div>
+                    <p class="font-bold text-gray-800">打卡记录</p>
+                    <p class="text-xs text-gray-500">67 次记录</p>
+                </div>
+            </div>
+            <iconify-icon class="text-gray-300 text-2xl" icon="ph:caret-right-bold"></iconify-icon>
+        </a>
+
+        <a href="stories.html" class="block bg-white rounded-3xl p-5 flex items-center justify-between shadow-sm active:bg-gray-50">
+            <div class="flex items-center gap-4">
+                <div class="w-11 h-11 bg-purple-50 rounded-2xl flex items-center justify-center text-2xl">📝</div>
+                <div>
+                    <p class="font-bold text-gray-800">我的故事</p>
+                    <p class="text-xs text-gray-500">参与评论 12 条</p>
+                </div>
+            </div>
+            <iconify-icon class="text-gray-300 text-2xl" icon="ph:caret-right-bold"></iconify-icon>
+        </a>
+
+        <div class="block bg-white rounded-3xl p-5 flex items-center justify-between shadow-sm active:bg-gray-50">
+            <div class="flex items-center gap-4">
+                <div class="w-11 h-11 bg-green-50 rounded-2xl flex items-center justify-center text-2xl">⚙️</div>
+                <div>
+                    <p class="font-bold text-gray-800">系统设置</p>
+                </div>
+            </div>
+            <iconify-icon class="text-gray-300 text-2xl" icon="ph:caret-right-bold"></iconify-icon>
+        </div>
+    </div>
+
+    <!-- 底部导航栏（与 index 保持一致） -->
+    <div class="absolute bottom-0 w-full h-20 bg-white border-t border-gray-100 flex items-center justify-around px-2 z-30">
+    <a href="index.html" class="flex flex-col items-center gap-1 text-gray-400">
+        <iconify-icon class="text-3xl" icon="ph:map-trifold-fill"></iconify-icon>
+        <span class="text-[10px]">地图</span>
+    </a>
+    <a href="atlas.html" class="flex flex-col items-center gap-1 text-gray-400">
+        <iconify-icon class="text-3xl" icon="ph:cat-fill"></iconify-icon>
+        <span class="text-[10px] font-bold">图鉴</span>
+    </a>
+    <a href="checkin.html" class="flex flex-col items-center gap-1 -mt-8">
+        <div class="w-16 h-16 bg-[#FF9F43] rounded-full flex items-center justify-center text-white shadow-2xl border-4 border-white">
+            <iconify-icon class="text-4xl" icon="ph:camera-fill"></iconify-icon>
+        </div>
+        <span class="text-[10px] font-bold text-[#FF9F43] mt-1">打卡</span>
+    </a>
+    <a href="stories.html" class="flex flex-col items-center gap-1 text-gray-400">
+        <iconify-icon class="text-3xl" icon="ph:chat-teardrop-text-fill"></iconify-icon>
+        <span class="text-[10px]">故事</span>
+    </a>
+    <a href="profile.html" class="flex flex-col items-center gap-1 text-[#FF9F43]">
+        <iconify-icon class="text-3xl" icon="ph:user-circle-fill"></iconify-icon>
+        <span class="text-[10px]">我的</span>
+    </a>
+</div>
+</div>
+</body>
+</html>

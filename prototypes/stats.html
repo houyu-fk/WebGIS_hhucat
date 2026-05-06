@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>数据看板 - 校园猫猫地图</title>
+<script src="https://modao.cc/agent-py/static/source/js/tailwindcss.3.4.3.js"></script>
+<script src="https://modao.cc/agent-py/static/source/js/iconify-icon.min.1.0.7.js"></script>
+<script src="https://modao.cc/agent-py/static/source/js/echarts.min.5.4.3.js"></script>
+<style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+<div class="w-[375px] h-[812px] bg-[#FFF9F0] relative overflow-hidden shadow-2xl rounded-[40px] border-[8px] border-gray-800 flex flex-col">
+<!-- 头部 -->
+<div class="pt-12 px-6 pb-6 bg-white border-b border-gray-100 flex items-center justify-between">
+<div>
+<h1 class="text-2xl font-bold text-gray-800">校园流浪猫看板</h1>
+<p class="text-[10px] text-gray-400 mt-1">更新日期: 2026年04月21日</p>
+</div>
+<button class="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center text-gray-400 hover:text-[#FF9F43] transition-colors" onclick="history.back()">
+<iconify-icon class="text-xl" icon="ph:caret-left-bold"></iconify-icon>
+</button>
+</div>
+<!-- 数据摘要 -->
+<div class="px-6 py-6 overflow-y-auto flex-1 no-scrollbar space-y-6 pb-20">
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-white p-4 rounded-[28px] shadow-sm flex flex-col items-center">
+<span class="text-[10px] text-gray-400 mb-1">已登记总数</span>
+<span class="text-3xl font-black text-[#FF9F43]">42</span>
+<span class="text-[10px] text-green-500 mt-1 font-bold">↑ 3.5% 本月</span>
+</div>
+<div class="bg-white p-4 rounded-[28px] shadow-sm flex flex-col items-center">
+<span class="text-[10px] text-gray-400 mb-1">本周投喂总次</span>
+<span class="text-3xl font-black text-[#FF9F43]">842</span>
+<span class="text-[10px] text-red-400 mt-1 font-bold">↓ 2.1% 本周</span>
+</div>
+</div>
+<!-- 饼图: 性格分布 -->
+<div class="bg-white p-5 rounded-[32px] shadow-sm">
+<h2 class="font-bold text-gray-800 flex items-center gap-2 mb-4">
+<iconify-icon class="text-[#FF9F43]" icon="ph:chart-pie-fill"></iconify-icon>
+                    猫咪性格分布
+                </h2>
+<div class="w-full h-48" id="pieChart"></div>
+</div>
+<!-- 柱状图: 热门点位频次 -->
+<div class="bg-white p-5 rounded-[32px] shadow-sm">
+<h2 class="font-bold text-gray-800 flex items-center gap-2 mb-4">
+<iconify-icon class="text-[#FF9F43]" icon="ph:map-pin-fill"></iconify-icon>
+                    热门点位投喂频次
+                </h2>
+<div class="w-full h-48" id="barChart"></div>
+</div>
+<!-- 折线图: 趋势 -->
+<div class="bg-white p-5 rounded-[32px] shadow-sm">
+<h2 class="font-bold text-gray-800 flex items-center gap-2 mb-4">
+<iconify-icon class="text-[#FF9F43]" icon="ph:trend-up-fill"></iconify-icon>
+                    猫咪数量变化趋势
+                </h2>
+<div class="w-full h-48" id="lineChart"></div>
+</div>
+<div class="p-4 bg-orange-50 border border-orange-100 rounded-3xl">
+<p class="text-xs text-orange-600 leading-relaxed italic">
+<iconify-icon class="mr-1" icon="ph:info-bold"></iconify-icon>
+                    温馨提示：数据显示最近宿舍区投喂频次过高，建议分散至其他点位，避免猫咪在宿舍区过度聚集引起拥堵。
+                </p>
+</div>
+</div>
+<!-- 底部按钮 -->
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 w-[340px]">
+<a class="block w-full bg-[#FF9F43] text-white py-4 rounded-3xl font-bold text-center shadow-xl" href="index.html">返回地图首页</a>
+</div>
+</div>
+<script>
+        // 初始化图表
+        window.onload = function() {
+            // 饼图
+            const pieDom = document.getElementById('pieChart');
+            const pieChart = echarts.init(pieDom);
+            pieChart.setOption({
+                tooltip: { trigger: 'item' },
+                color: ['#FF9F43', '#78E08F', '#60A5FA', '#F472B6'],
+                series: [{
+                    name: '性格',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: { borderRadius: 10, borderColor: '#fff', borderWidth: 2 },
+                    label: { show: false },
+                    data: [
+                        { value: 18, name: '亲人' },
+                        { value: 10, name: '高冷' },
+                        { value: 8, name: '活泼' },
+                        { value: 6, name: '胆小' }
+                    ]
+                }]
+            });
+
+            // 柱状图
+            const barDom = document.getElementById('barChart');
+            const barChart = echarts.init(barDom);
+            barChart.setOption({
+                grid: { left: '10%', right: '10%', bottom: '15%', top: '10%', containLabel: true },
+                xAxis: { type: 'category', data: ['图书馆', '三号楼', '教一楼', '南草坪'], axisLine: { show: false }, axisTick: { show: false } },
+                yAxis: { type: 'value', splitLine: { lineStyle: { type: 'dashed' } } },
+                series: [{
+                    data: [120, 200, 150, 80],
+                    type: 'bar',
+                    itemStyle: { color: '#FF9F43', borderRadius: [10, 10, 0, 0] }
+                }]
+            });
+
+            // 折线图
+            const lineDom = document.getElementById('lineChart');
+            const lineChart = echarts.init(lineDom);
+            lineChart.setOption({
+                xAxis: { type: 'category', data: ['1月', '2月', '3月', '4月'], axisLine: { show: false } },
+                yAxis: { type: 'value' },
+                series: [{
+                    data: [35, 38, 40, 42],
+                    type: 'line',
+                    smooth: true,
+                    areaStyle: { color: 'rgba(255, 159, 67, 0.2)' },
+                    lineStyle: { color: '#FF9F43', width: 4 }
+                }]
+            });
+        }
+    </script>
+</body>
+</html>
